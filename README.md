@@ -2,9 +2,11 @@
 
 ## Overview
 
+Cryptocurrency markets trade continuously, exhibit substantial variation in liquidity and market participation, and often experience large price and volume movements. These characteristics make them a useful setting for investigating whether short-horizon momentum and reversal patterns can predict future returns.
+
 This project investigates cross-sectional momentum and reversal effects in liquid cryptocurrency markets using hourly Binance Spot OHLCV data.
 
-The main objective is to test whether past returns predict future returns across different formation horizons, and whether abnormal trading volume strengthens momentum or mean-reversion signals.
+The main objective is to test whether past returns predict future returns across different formation horizons, whether abnormal trading volume strengthens these effects, and whether any apparent profitability survives realistic transaction costs.
 
 ## Research Questions
 
