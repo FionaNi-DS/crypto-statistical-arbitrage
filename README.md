@@ -38,7 +38,7 @@ The main objective is to test whether past returns predict future returns across
 - LINKUSDT
 - AVAXUSDT
 
-The dataset contains Open, High, Low, Close and Volume information for each hourly observation.
+The dataset contains Open, High, Low, Close and Volume information for each  observation.
 
 ## Methodology
 
@@ -52,14 +52,19 @@ The project will test cross-sectional momentum and reversal signals over multipl
 - 72 hours
 - 168 hours
 
+
 At each rebalancing time, cryptocurrencies will be ranked according to their past returns.
 
-The baseline portfolio will:
+Two portfolio directions will be evaluated:
 
-- Go long the top three cryptocurrencies
-- Go short the bottom three cryptocurrencies
+- **Momentum:** long the top three cryptocurrencies and short the bottom three
+- **Reversal:** long the bottom three cryptocurrencies and short the top three
+
+Both portfolios will:
+
 - Use equal weights
-- Rebalance hourly
+- Maintain approximately market-neutral long and short exposure
+- Rebalance according to the selected holding period
 - Apply turnover-based transaction costs
 
 The project will also investigate whether abnormal trading volume strengthens momentum or reversal signals.
