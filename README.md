@@ -1,29 +1,47 @@
-# Cryptocurrency Statistical Arbitrage
+# Cryptocurrency Momentum and Reversal Model Validation
 
-## Overview
+## Project Overview
 
-Cryptocurrency markets trade continuously, exhibit substantial variation in liquidity and market participation, and often experience large price and volume movements. These characteristics make them a useful setting for investigating whether short-horizon momentum and reversal patterns can predict future returns.
+This project develops and independently validates cross-sectional momentum and reversal strategies across ten liquid cryptocurrency pairs using hourly Binance Spot OHLCV data from 2023 to 2025.
 
-This project investigates cross-sectional momentum and reversal effects in liquid cryptocurrency markets using hourly Binance Spot OHLCV data.
+The project was designed as an end-to-end quantitative research and model-validation exercise. It covers:
 
-The main objective is to test whether past returns predict future returns across different formation horizons, whether abnormal trading volume strengthens these effects, and whether any apparent profitability survives realistic transaction costs.
+- data collection and quality checks;
+- exploratory analysis;
+- momentum and reversal signal research;
+- portfolio construction and backtesting;
+- turnover-based transaction-cost modelling;
+- benchmark comparison;
+- out-of-sample validation;
+- alpha and beta attribution;
+- sensitivity and robustness analysis;
+- formal validation findings and recommendations.
+
+The final model investigated was a weekly long-only momentum strategy. It ranked cryptocurrencies by their previous seven-day returns, selected the three highest-ranked assets, assigned equal weights and rebalanced every Monday at 00:00 UTC.
+
+---
 
 ## Research Questions
 
-1. Do liquid cryptocurrencies exhibit short-term momentum or reversal?
-2. Which formation horizons produce the strongest predictive signals?
-3. Does abnormal trading volume strengthen momentum or reversal effects?
-4. Do the strategies remain profitable after transaction costs?
-5. Are the results stable out of sample?
+1. Do liquid cryptocurrencies exhibit short-horizon momentum or reversal?
+2. Which signal horizons provide the strongest cross-sectional predictive information?
+3. Do statistically positive signals remain economically viable after transaction costs?
+4. Can lower-frequency portfolio construction reduce turnover sufficiently?
+5. Does the selected model outperform a simple equal-weight cryptocurrency benchmark?
+6. Is model performance stable in an untouched out-of-sample period?
+7. Does the model generate statistically significant alpha after controlling for broad market exposure?
+
+---
 
 ## Data
 
 - **Source:** Binance Spot Market
-- **Frequency:** 1-hour bars
-- **Period:** 2023-01-01 to 2025-12-31
+- **Frequency:** Hourly OHLCV bars
+- **Period:** 1 January 2023 to 31 December 2025
 - **Time zone:** UTC
 - **Quote currency:** USDT
-- **Universe:** 10 liquid cryptocurrency pairs
+- **Universe:** Ten liquid cryptocurrency pairs
+- **Total observations:** Approximately 263,000 asset-hour records
 
 ### Cryptocurrency Universe
 
@@ -38,58 +56,162 @@ The main objective is to test whether past returns predict future returns across
 - LINKUSDT
 - AVAXUSDT
 
-The dataset contains Open, High, Low, Close and Volume information for each  observation.
-
-## Methodology
-
-The project will test cross-sectional momentum and reversal signals over multiple formation horizons:
-
-- 1 hour
-- 3 hours
-- 6 hours
-- 12 hours
-- 24 hours
-- 72 hours
-- 168 hours
-
-
-At each rebalancing time, cryptocurrencies will be ranked according to their past returns.
-
-Two portfolio directions will be evaluated:
-
-- **Momentum:** long the top three cryptocurrencies and short the bottom three
-- **Reversal:** long the bottom three cryptocurrencies and short the top three
-
-Both portfolios will:
-
-- Use equal weights
-- Maintain approximately market-neutral long and short exposure
-- Rebalance according to the selected holding period
-- Apply turnover-based transaction costs
-
-The project will also investigate whether abnormal trading volume strengthens momentum or reversal signals.
-
-## Performance Evaluation
-
-The strategies will be evaluated using:
-
-- Annualised Return
-- Annualised Volatility
-- Sharpe Ratio
-- Maximum Drawdown
-- Alpha and Beta
-- Turnover
-- Hit Rate
+---
 
 ## Validation Design
 
-The sample will be divided chronologically:
+The sample was divided chronologically:
 
-- **In-sample research:** 2023-01-01 to 2024-06-30
-- **Validation period:** 2024-07-01 to 2024-12-31
-- **Out-of-sample test:** 2025-01-01 to 2025-12-31
+- **Model development period:** 1 January 2023 to 31 December 2024
+- **Out-of-sample validation period:** 1 January 2025 to 31 December 2025
 
-This time-based split is designed to reduce look-ahead bias and evaluate the strategy on unseen data.
+All final model specifications were frozen before the 2025 validation period was evaluated.
+
+The frozen model specification was:
+
+- **Signal:** Previous 168-hour return
+- **Portfolio:** Top three momentum-ranked cryptocurrencies
+- **Direction:** Long-only
+- **Weighting:** Equal weighted
+- **Rebalancing:** Weekly, Monday at 00:00 UTC
+- **Transaction cost:** 20 basis points per unit of turnover
+
+---
+
+## Research and Model-Development Findings
+
+### Short-Horizon Reversal
+
+Cross-sectional information coefficients were negative across all tested formation horizons, indicating short-term reversal.
+
+The strongest reversal effect appeared at the shortest horizons. However, hourly portfolio turnover was extremely high and the positive gross returns were eliminated by the assumed 20-basis-point transaction cost.
+
+This demonstrated that statistical predictability did not translate into economic profitability.
+
+### Weekly Long-Only Momentum
+
+A weekly long-only momentum strategy substantially reduced turnover and generated positive development-period net performance.
+
+Development-period results included:
+
+- **Average hourly net return:** approximately 0.0110%
+- **Annualized net Sharpe Ratio:** approximately 1.35
+- **Maximum Drawdown:** approximately -57.3%
+- **Final portfolio value:** approximately 4.14
+- **Average turnover:** approximately 0.0079
+- **Rebalances:** approximately 52 per year
+
+However, the strategy underperformed the equal-weight cryptocurrency benchmark during the development period.
+
+---
+
+## Out-of-Sample Validation Results
+
+The frozen weekly momentum model failed to maintain its development-period performance during 2025.
+
+| Metric | Development 2023–2024 | Validation 2025 |
+|---|---:|---:|
+| Average hourly net return | 0.000110 | -0.000036 |
+| Hourly net volatility | 0.007648 | 0.007652 |
+| Annualized net Sharpe Ratio | 1.3506 | -0.4439 |
+| Maximum Drawdown | -57.33% | -55.81% |
+| Final portfolio value | 4.1448 | 0.5626 |
+| Average turnover | 0.007885 | 0.008409 |
+| Rebalances per year | approximately 52 | 52 |
+
+The similar volatility and turnover levels across the two periods indicate that performance deterioration was not caused by a material implementation change.
+
+---
+
+## Benchmark Comparison
+
+During 2025, both the weekly momentum strategy and the equal-weight cryptocurrency benchmark produced negative returns.
+
+However, the momentum model performed worse across the principal metrics:
+
+| Metric | Weekly Momentum | Equal-Weight Benchmark |
+|---|---:|---:|
+| Average hourly net return | -0.000036 | -0.000024 |
+| Annualized net Sharpe Ratio | -0.4439 | -0.2991 |
+| Maximum Drawdown | -55.81% | -52.31% |
+| Final portfolio value | 0.5626 | 0.6256 |
+
+The top-three momentum selection rule therefore did not add value relative to the simpler diversified benchmark.
+
+---
+
+## Alpha and Beta Attribution
+
+An OLS regression with HAC-robust standard errors was used to regress strategy returns on equal-weight benchmark returns.
+
+Hourly results:
+
+- **Alpha:** slightly negative and statistically insignificant
+- **Alpha p-value:** approximately 0.65
+- **Beta:** approximately 0.94
+- **R-squared:** approximately 87.5%
+
+Daily-return robustness results:
+
+- **Daily alpha:** statistically insignificant
+- **Daily beta:** approximately 0.92
+- **R-squared:** approximately 85.7%
+
+The results indicate that most strategy-return variation was explained by broad cryptocurrency market exposure rather than persistent momentum-selection alpha.
+
+---
+
+## Sensitivity and Robustness Analysis
+
+### Transaction-Cost Sensitivity
+
+The strategy was evaluated under transaction-cost assumptions ranging from 0 to 30 basis points.
+
+The strategy remained unprofitable even under the zero-cost scenario. Higher transaction costs increased the losses, but execution costs were not the principal cause of model failure.
+
+### Return-Frequency Robustness
+
+The alpha-beta regression was repeated using compounded daily returns instead of hourly returns.
+
+The main conclusions remained unchanged:
+
+- beta remained close to one;
+- alpha remained statistically insignificant;
+- a large proportion of strategy returns remained explained by the benchmark.
+
+---
+
+## Final Validation Decision
+
+The model implementation was consistent with the documented specification.
+
+However, the model did not demonstrate:
+
+- stable out-of-sample profitability;
+- benchmark-relative outperformance;
+- statistically significant alpha;
+- acceptable downside protection.
+
+The model is therefore **not recommended for standalone production investment use in its current form**.
+
+It should remain classified as a research model pending further redevelopment, broader historical testing, improved diversification, stronger risk controls and additional independent validation.
+
+---
+
+## Key Model Limitations
+
+- The universe contained only ten cryptocurrencies.
+- The asset selection may contain survivorship bias.
+- The full sample covered only three years.
+- The out-of-sample period covered only one year.
+- Transaction costs were represented using a fixed basis-point assumption.
+- Dynamic bid-ask spreads, market impact and order-size constraints were not modelled.
+- The portfolio was concentrated in only three assets.
+- The strategy retained substantial broad-market beta.
+- The equal-weight benchmark used a simplified implementation.
+- Performance appeared dependent on cryptocurrency market regime.
+
+---
 
 ## Repository Structure
 
@@ -98,12 +220,16 @@ crypto-statistical-arbitrage/
 ├── data/
 │   ├── raw/
 │   └── processed/
-├── notebooks/
-├── src/
 ├── results/
-│   ├── figures/
-│   └── tables/
-├── tests/
+│   ├── model_development/
+│   └── signal_research/
+├── 01_data_collection.ipynb
+├── 02_data_cleaning.ipynb
+├── 03_exploratory_analysis.ipynb
+├── 04_signal_research.ipynb
+├── 05_Model_development_and_exploratory_backtesting.ipynb
+├── 06_validation.ipynb
+├── validation_report.md
 ├── README.md
-├── requirements.txt
+├── LICENSE
 └── .gitignore
