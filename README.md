@@ -4,7 +4,9 @@
 
 This project develops and independently validates cross-sectional momentum and reversal strategies across ten liquid cryptocurrency pairs using hourly Binance Spot OHLCV data from 2023 to 2025.
 
-The project was designed as an end-to-end quantitative research and model-validation exercise. It covers:
+> **Final result:** The weekly momentum model performed strongly during 2023–2024 development but failed during the untouched 2025 validation period. It underperformed the equal-weight benchmark, produced no statistically significant alpha and remained highly exposed to broad cryptocurrency market movements.
+
+The project was designed as an end-to-end quantitative research and model-validation work. It covers:
 
 - data collection and quality checks;
 - exploratory analysis;
@@ -20,6 +22,8 @@ The project was designed as an end-to-end quantitative research and model-valida
 The final model investigated was a weekly long-only momentum strategy. It ranked cryptocurrencies by their previous seven-day returns, selected the three highest-ranked assets, assigned equal weights and rebalanced every Monday at 00:00 UTC.
 
 ---
+
+
 
 ## Research Questions
 
@@ -212,6 +216,35 @@ It should remain classified as a research model pending further redevelopment, b
 - Performance appeared dependent on cryptocurrency market regime.
 
 ---
+
+
+## Main Conclusion
+
+The project demonstrates that:
+
+- statistically detectable signals may be economically unviable after realistic transaction costs;
+- positive absolute returns do not necessarily represent independent alpha;
+- benchmark comparison is essential for evaluating long-only investment models;
+- strong development-period performance may fail to persist out of sample;
+- high Sharpe Ratio in development does not guarantee model stability;
+- independent validation can identify material performance, concentration and market-dependency risks;
+- a model may be implemented correctly but still be unsuitable for production use.
+
+
+## Technical Skills Demonstrated
+
+- Python, pandas and NumPy
+- Time-series and cross-sectional analysis
+- Cryptocurrency OHLCV data processing
+- Momentum, reversal and information-coefficient research
+- Portfolio construction and rebalancing
+- Turnover and transaction-cost modelling
+- Sharpe Ratio and Maximum Drawdown analysis
+- Out-of-sample model validation
+- Benchmark and challenger analysis
+- OLS regression and HAC-robust inference
+- Sensitivity and robustness analysis
+- Model-risk findings and validation reporting
 
 ## Repository Structure
 
